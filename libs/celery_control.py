@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import functools
 import json
 import logging
@@ -98,12 +99,18 @@ def instantiate_celery_app_connection(service_name: str) -> CeleryLike:
     if FORCE_CELERY_OFF:
         return DebugCeleryApp  # type: ignore[return-value]
     
-    # the location of the manager_ip credentials file is in the folder above the project folder.
-    try:
-        with open(CELERY_CONFIG_LOCATION) as f:
-            manager_ip, password = f.read().splitlines()
-    except OSError:
-        return DebugCeleryApp  # type: ignore[return-value]
+    # Try environment variables first, fall back to config file
+    manager_ip = os.environ.get('CELERY_MANAGER_IP')
+    password = os.environ.get('CELERY_PASSWORD')
+    
+    if not manager_ip or not password:
+        try:
+            # the location of the manager_ip credentials file is in the folder above the project folder.
+            with open(CELERY_CONFIG_LOCATION) as f:
+                manager_ip, password = f.read().splitlines()
+        except OSError:
+            return DebugCeleryApp  # type: ignore[return-value]
+    
     
     return Celery(
         service_name,
