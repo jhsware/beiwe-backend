@@ -8,7 +8,8 @@ from sentry_sdk.integrations import _AUTO_ENABLING_INTEGRATIONS
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from config.settings import DOMAIN_NAME, FLASK_SECRET_KEY, SENTRY_ELASTIC_BEANSTALK_DSN
+from config.settings import DOMAIN_NAME, FLASK_SECRET_KEY, SENTRY_ELASTIC_BEANSTALK_DSN, STATIC_ROOT_PATH
+
 from libs.sentry import normalize_sentry_dsn
 
 
@@ -188,7 +189,8 @@ MIDDLEWARE = [
 ################################### Django Static Files ############################################
 ####################################################################################################
 
-STATIC_ROOT = "staticfiles"
+STATIC_ROOT = STATIC_ROOT_PATH  # Configurable via STATIC_ROOT env var
+
 STATIC_URL = "/static/"
 STATICFILES_DIRS = ["frontend/static/"]
 
