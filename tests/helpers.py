@@ -38,7 +38,13 @@ from libs.utils.security_utils import device_hash, generate_easy_alphanumeric_st
 CURRENT_TEST_HTML_FILEPATH = BEIWE_PROJECT_ROOT + "/private/current_test_page.html"
 Schedule = WeeklySchedule|RelativeSchedule|AbsoluteSchedule
 
+
+# NOTE: This path concatenation assumes STATIC_ROOT is a relative path. If STATIC_ROOT is set to an
+# absolute path (e.g., "/var/lib/beiwe/staticfiles" for NixOS), this will produce an invalid path.
+# To fix, use: from os.path import join as path_join; ABS_STATIC_ROOT = path_join(BEIWE_PROJECT_ROOT, STATIC_ROOT).encode()
+# os.path.join correctly handles absolute paths by returning them unchanged.
 ABS_STATIC_ROOT = (BEIWE_PROJECT_ROOT + STATIC_ROOT).encode()
+
 
 # we need this to not be an _instance_ variable in TestDownloadParticipantTreeData
 CURRENT_TEST_DATE = timezone.now().today().date()
