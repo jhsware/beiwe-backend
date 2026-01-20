@@ -45,6 +45,17 @@ S3_REGION_NAME: str = getenv("S3_REGION_NAME", "us-east-1")
 #  the frontend server.
 DOMAIN_NAME: str = getenv("DOMAIN_NAME")
 
+#
+# Static files configuration
+#
+
+# The directory where Django's collectstatic command will place collected static files.
+# On read-only deployments (like NixOS), set this to a writable path.
+#   Example: STATIC_ROOT=/var/lib/beiwe/staticfiles
+# For development or standard deployments, the default "staticfiles" works fine.
+STATIC_ROOT_PATH: str = getenv("STATIC_ROOT", "staticfiles")
+
+
 # The email address to place in the footer of the website as your system administrator contact.
 # This setting accepts a comma-separated list of email addresses, but currently only the first
 # address will be used.
