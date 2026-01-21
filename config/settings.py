@@ -55,6 +55,12 @@ DOMAIN_NAME: str = getenv("DOMAIN_NAME")
 # For development or standard deployments, the default "staticfiles" works fine.
 STATIC_ROOT_PATH: str = getenv("STATIC_ROOT", "staticfiles")
 
+# Whether to use minified CSS files (.min.css instead of .css).
+# Disabled by default - gzip compression is efficient enough without minification.
+# Set MINIFY_CSS=true to enable (requires minified files to exist in static directory).
+MINIFY_CSS: bool = getenv("MINIFY_CSS", "false").lower() == "true"
+
+
 
 # The email address to place in the footer of the website as your system administrator contact.
 # This setting accepts a comma-separated list of email addresses, but currently only the first
