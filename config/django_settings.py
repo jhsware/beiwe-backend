@@ -207,6 +207,11 @@ TEMPLATES = [
             "frontend/static/javascript",
             "frontend/static/css",
             "frontend/static",
+            # Add STATIC_ROOT_PATH for NixOS deployments where static files are
+            # collected to a separate writable directory via collectstatic.
+            # This allows Jinja2 templates to include CSS/JS files from the
+            # collected static files location (e.g., /var/lib/beiwe-backend/static).
+            STATIC_ROOT_PATH,
         ],
         'OPTIONS': {
             'autoescape': True,
@@ -218,6 +223,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 ####################################################################################################
 ###################################### URL Routing #################################################
