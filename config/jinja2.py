@@ -11,7 +11,7 @@ from django.urls import reverse
 from jinja2 import Environment
 from jinja2.ext import Extension
 
-from config.settings import SENTRY_JAVASCRIPT_DSN, SYSADMIN_EMAILS
+from config.settings import MINIFY_CSS, SENTRY_JAVASCRIPT_DSN, SYSADMIN_EMAILS
 from constants.common_constants import RUNNING_TESTS
 from libs.endpoint_helpers.participant_helpers import niceish_iso_time_format
 from libs.utils.dev_utils import p
@@ -99,8 +99,9 @@ class LocalAssets:
     AUTOLOGOUT = "javascript/autologout.js"
 
 
-# until we are reading to use minified assets on production this is debug-only
-if not settings.DEBUG or RUNNING_TESTS:
+# Minification is disabled by default - gzip compression is efficient enough.
+# Set MINIFY_CSS=true to enable .min.css file usage (requires minified files to exist).
+if MINIFY_CSS or RUNNING_TESTS:
     if RUNNING_TESTS:
         print("\nRunning tests - all css assets in rendered pages will be empty.\n")
     for attrname in dir(LocalAssets):
